@@ -1,0 +1,21 @@
+# Android Build Dosyaları
+/build
+*/build
+*.apk
+*.ap_
+*.dex
+*.class
+
+# Gradle Dosyaları
+.gradle/
+build/
+
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+local.properties
+
+# Kotlin / KSP (Görselde kspCaches görünüyor)
+build/generated/ksp

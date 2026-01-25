@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QR Guard</string>
+    
+    <!-- Permissions -->
+    <string name="camera_permission_required">Kamera İzni Gerekli</string>
+    <string name="camera_permission_rationale">QR kod taramak için kamera erişimine ihtiyacımız var.</string>
+    <string name="grant_permission">İzin Ver</string>
+    <string name="open_settings">Ayarları Aç</string>
+    
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Ana Sayfa</string>
+    <string name="nav_scan">Tara</string>
+    <string name="nav_create">Oluştur</string>
+    <string name="nav_history">Geçmiş</string>
+    
+    <!-- Home Screen -->
+    <string name="scan_qr_code">TARA</string>
+    <string name="create_qr_code">OLUŞTUR</string>
+    <string name="favorites">Favoriler</string>
+    <string name="history">Geçmiş</string>
+    <string name="quick_access">Hızlı Erişim</string>
+    <string name="recent_scans">Son Taramalar</string>
+    <string name="no_recent_scans">Henüz tarama yapılmadı</string>
+    <string name="see_all">Tümünü Gör</string>
+    <string name="my_qr_codes">QR Kodlarım</string>
+    <string name="home_subtitle">Tara • Oluştur • Yönet</string>
+    
+    <!-- Scan Screen -->
+    <string name="torch">Fener</string>
+    <string name="gallery">Galeri</string>
+    <string name="scan_hint">QR kodu çerçeve içine hizalayın</string>
+    <string name="scan_title">QR Tara</string>
+    
+    <!-- Content Types -->
+    <string name="type_url">Link</string>
+    <string name="type_text">Metin</string>
+    <string name="type_wifi">Wi-Fi</string>
+    <string name="type_email">E-posta</string>
+    <string name="type_phone">Telefon</string>
+    <string name="type_sms">SMS</string>
+    <string name="type_contact">Kişi</string>
+    <string name="type_geo">Konum</string>
+    <string name="type_event">Etkinlik</string>
+    <string name="type_all">Tümü</string>
+    
+    <!-- Actions -->
+    <string name="copy">Kopyala</string>
+    <string name="share">Paylaş</string>
+    <string name="open_url">Aç</string>
+    <string name="close">Kapat</string>
+    <string name="delete">Sil</string>
+    <string name="save">Kaydet</string>
+    <string name="add_to_favorites">Favorilere Ekle</string>
+    <string name="remove_from_favorites">Favorilerden Çıkar</string>
+    <string name="connect_wifi">Bağlan</string>
+    <string name="call">Ara</string>
+    <string name="send_email">E-posta Gönder</string>
+    <string name="send_sms">SMS Gönder</string>
+    <string name="open_map">Haritada Aç</string>
+    <string name="save_contact">Kişilere Kaydet</string>
+    <string name="back">Geri</string>
+    
+    <!-- Results -->
+    <string name="scan_result">Tarama Sonucu</string>
+    <string name="copied_to_clipboard">Panoya kopyalandı</string>
+    <string name="added_to_favorites">Favorilere eklendi</string>
+    <string name="removed_from_favorites">Favorilerden çıkarıldı</string>
+    <string name="item_deleted">Öğe silindi</string>
+    <string name="items_count">%d öğe</string>
+    
+    <!-- Security Warnings -->
+    <string name="warning_insecure_url">⚠️ Güvensiz Bağlantı (HTTP)</string>
+    <string name="warning_suspicious_url">⚠️ Şüpheli URL tespit edildi</string>
+    <string name="warning_short_url">⚠️ Kısaltılmış URL - dikkatli olun</string>
+    
+    <!-- History Screen -->
+    <string name="history_title">Tarama Geçmişi</string>
+    <string name="history_empty">Geçmiş boş</string>
+    <string name="history_empty_desc">Taradığınız QR kodları burada görünecek</string>
+    <string name="clear_history">Geçmişi Temizle</string>
+    <string name="clear_history_confirm">Tüm geçmiş silinecek. Emin misiniz?</string>
+    <string name="cancel">İptal</string>
+    <string name="confirm">Onayla</string>
+    
+    <!-- Favorites Screen -->
+    <string name="favorites_title">Favorilerim</string>
+    <string name="favorites_empty">Favori yok</string>
+    <string name="favorites_empty_desc">Favori QR kodlarınız burada görünecek</string>
+    
+    <!-- Create QR Screen -->
+    <string name="create_title">QR Kod Oluştur</string>
+    <string name="select_qr_type">QR Türü Seçin</string>
+    <string name="qr_preview">Önizleme</string>
+    <string name="generate_qr">QR Oluştur</string>
+    <string name="save_to_gallery">Galeriye Kaydet</string>
+    <string name="share_qr">QR Paylaş</string>
+    <string name="qr_saved">QR kod galeriye kaydedildi</string>
+    <string name="qr_save_failed">QR kod kaydedilemedi</string>
+    <string name="customize">Özelleştir</string>
+    <string name="qr_color">QR Rengi</string>
+    <string name="background_color">Arka Plan Rengi</string>
+    
+    <!-- QR Form Labels -->
+    <string name="label_text">Metin</string>
+    <string name="label_url">URL Adresi</string>
+    <string name="label_wifi_ssid">Ağ Adı (SSID)</string>
+    <string name="label_wifi_password">Şifre</string>
+    <string name="label_wifi_security">Güvenlik Türü</string>
+    <string name="label_email_address">E-posta Adresi</string>
+    <string name="label_email_subject">Konu</string>
+    <string name="label_email_body">Mesaj</string>
+    <string name="label_phone_number">Telefon Numarası</string>
+    <string name="label_sms_number">Telefon Numarası</string>
+    <string name="label_sms_message">Mesaj</string>
+    <string name="label_contact_name">Ad Soyad</string>
+    <string name="label_contact_phone">Telefon</string>
+    <string name="label_contact_email">E-posta</string>
+    <string name="label_contact_company">Şirket</string>
+    <string name="label_contact_title">Ünvan</string>
+    <string name="label_geo_latitude">Enlem</string>
+    <string name="label_geo_longitude">Boylam</string>
+    <string name="label_geo_label">Konum Adı</string>
+    <string name="label_event_title">Etkinlik Adı</string>
+    <string name="label_event_location">Konum</string>
+    <string name="label_event_start">Başlangıç</string>
+    <string name="label_event_end">Bitiş</string>
+    <string name="label_event_description">Açıklama</string>
+    
+    <!-- Placeholders -->
+    <string name="placeholder_text">Metninizi buraya yazın…</string>
+    <string name="placeholder_url">https://example.com</string>
+    <string name="placeholder_wifi_ssid">Ağ adını girin</string>
+    <string name="placeholder_wifi_password">Şifreyi girin</string>
+    <string name="placeholder_email">ornek@email.com</string>
+    <string name="placeholder_phone">+90 555 123 4567</string>
+    <string name="placeholder_name">Ad Soyad</string>
+    <string name="placeholder_optional">Opsiyonel</string>
+    
+    <!-- WiFi Security Types -->
+    <string name="wifi_security_wpa">WPA/WPA2</string>
+    <string name="wifi_security_wep">WEP</string>
+    <string name="wifi_security_none">Açık (Şifresiz)</string>
+    
+    <!-- Validation -->
+    <string name="error_field_required">Bu alan zorunludur</string>
+    <string name="error_invalid_url">Geçersiz URL</string>
+    <string name="error_invalid_email">Geçersiz e-posta adresi</string>
+    <string name="error_invalid_phone">Geçersiz telefon numarası</string>
+    
+    <!-- Time -->
+    <string name="just_now">Az önce</string>
+    <string name="minutes_ago">%d dakika önce</string>
+    <string name="hours_ago">%d saat önce</string>
+    <string name="days_ago">%d gün önce</string>
+    <string name="today">Bugün</string>
+    <string name="yesterday">Dün</string>
+    
+    <!-- WiFi -->
+    <string name="wifi_ssid">Ağ Adı: %s</string>
+    <string name="wifi_password">Şifre: %s</string>
+    <string name="wifi_security">Güvenlik: %s</string>
+    <string name="wifi_connecting">Bağlanıyor…</string>
+    <string name="wifi_connected">Bağlandı</string>
+    <string name="wifi_failed">Bağlantı başarısız</string>
+    
+    <!-- Settings -->
+    <string name="settings">Ayarlar</string>
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_language">Dil</string>
+    <string name="settings_language_turkish">Türkçe</string>
+    <string name="settings_language_english">English</string>
+    <string name="settings_language_system">Sistem Varsayılanı</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_light">Açık</string>
+    <string name="settings_theme_dark">Koyu</string>
+    <string name="settings_theme_system">Sistem</string>
+    <string name="settings_vibration">Titreşim</string>
+    <string name="settings_sound">Ses</string>
+    <string name="settings_auto_copy">Otomatik Kopyala</string>
+    <string name="settings_about">Hakkında</string>
+    <string name="settings_version">Sürüm</string>
+    <string name="settings_export">Dışa Aktar</string>
+    <string name="settings_general">Genel</string>
+    <string name="settings_appearance">Görünüm</string>
+    
+    <!-- About -->
+    <string name="about_title">Hakkında</string>
+    <string name="about_app_name">QR Guard</string>
+    <string name="about_description">Hızlı, güvenli ve kullanımı kolay QR kod tarayıcı ve oluşturucu uygulaması.</string>
+    <string name="about_version">Sürüm %s</string>
+    <string name="about_developer">Geliştirici</string>
+    <string name="about_developer_name">Yunus Emre</string>
+    <string name="about_contact">İletişim</string>
+    <string name="about_rate">Uygulamayı Değerlendir</string>
+    <string name="about_share">Uygulamayı Paylaş</string>
+    <string name="about_privacy">Gizlilik Politikası</string>
+    <string name="about_terms">Kullanım Koşulları</string>
+    <string name="about_licenses">Açık Kaynak Lisansları</string>
+    <string name="about_copyright">© 2025 QR Guard. Tüm hakları saklıdır.</string>
+    
+    <!-- Gallery -->
+    <string name="select_from_gallery">Galeriden Seç</string>
+    <string name="no_qr_found">QR kod bulunamadı</string>
+    <string name="multiple_qr_found">%d QR kod bulundu</string>
+    
+    <!-- Onboarding / Permission -->
+    <string name="welcome_title">QR Guard\'a Hoş Geldiniz</string>
+    <string name="welcome_description">QR kodları taramak için kameranıza erişmemiz gerekiyor.</string>
+    <string name="permission_denied_title">İzin Reddedildi</string>
+    <string name="permission_denied_description">QR kodları taramak için kamera izni gereklidir. Lütfen ayarlardan izin verin.</string>
+</resources>
