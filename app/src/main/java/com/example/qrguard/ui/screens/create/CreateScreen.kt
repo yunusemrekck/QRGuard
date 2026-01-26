@@ -50,6 +50,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -91,7 +92,23 @@ fun CreateScreen(
     val saveSuccess by viewModel.saveSuccess.collectAsState()
     val foregroundColor by viewModel.foregroundColor.collectAsState()
     val backgroundColor by viewModel.backgroundColor.collectAsState()
-    
+
+    // Form input states for validation
+    val textInput by viewModel.textInput.collectAsState()
+    val urlInput by viewModel.urlInput.collectAsState()
+    val wifiSsid by viewModel.wifiSsid.collectAsState()
+    val emailAddress by viewModel.emailAddress.collectAsState()
+    val phoneNumber by viewModel.phoneNumber.collectAsState()
+    val smsNumber by viewModel.smsNumber.collectAsState()
+    val contactName by viewModel.contactName.collectAsState()
+    val geoLatitude by viewModel.geoLatitude.collectAsState()
+    val geoLongitude by viewModel.geoLongitude.collectAsState()
+
+    // Form validity - reactive to input changes
+    val isFormValid by remember(selectedType, textInput, urlInput, wifiSsid, emailAddress, phoneNumber, smsNumber, contactName, geoLatitude, geoLongitude) {
+        derivedStateOf { viewModel.isFormValid() }
+    }
+
     LaunchedEffect(saveSuccess) {
         saveSuccess?.let { success ->
             val message = if (success) R.string.qr_saved else R.string.qr_save_failed
@@ -131,7 +148,7 @@ fun CreateScreen(
                     )
                 }
             }
-            
+
             // Type Selection
             item {
                 Text(
@@ -140,7 +157,7 @@ fun CreateScreen(
                     fontSize = 14.sp,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
                 )
-                
+
                 FlowRow(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -157,7 +174,7 @@ fun CreateScreen(
                     }
                 }
             }
-            
+
             // Form
             item {
                 Spacer(modifier = Modifier.height(20.dp))
@@ -180,7 +197,7 @@ fun CreateScreen(
                     }
                 }
             }
-            
+
             // Color Customization
             item {
                 Spacer(modifier = Modifier.height(20.dp))
@@ -190,16 +207,16 @@ fun CreateScreen(
                     fontSize = 14.sp,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
                 )
-                
+
                 ColorSelectionSection(
                     title = stringResource(R.string.qr_color),
                     colors = QrColorOptions,
                     selectedColor = foregroundColor,
                     onColorSelected = viewModel::updateForegroundColor
                 )
-                
+
                 Spacer(modifier = Modifier.height(12.dp))
-                
+
                 ColorSelectionSection(
                     title = stringResource(R.string.background_color),
                     colors = QrBackgroundOptions,
@@ -207,7 +224,7 @@ fun CreateScreen(
                     onColorSelected = viewModel::updateBackgroundColor
                 )
             }
-            
+
             // Generate Button
             item {
                 Spacer(modifier = Modifier.height(24.dp))
@@ -217,7 +234,7 @@ fun CreateScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
                         .height(50.dp),
-                    enabled = viewModel.isFormValid() && !isLoading,
+                    enabled = isFormValid && !isLoading,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = AccentBlue
                     ),
@@ -237,7 +254,7 @@ fun CreateScreen(
                     }
                 }
             }
-            
+
             // QR Preview
             if (qrBitmap != null) {
                 item {
@@ -322,7 +339,7 @@ private fun QrForm(
             val ssid by viewModel.wifiSsid.collectAsState()
             val password by viewModel.wifiPassword.collectAsState()
             val security by viewModel.wifiSecurity.collectAsState()
-            
+
             QrTextField(
                 value = ssid,
                 onValueChange = viewModel::updateWifiSsid,
@@ -347,7 +364,7 @@ private fun QrForm(
             val email by viewModel.emailAddress.collectAsState()
             val subject by viewModel.emailSubject.collectAsState()
             val body by viewModel.emailBody.collectAsState()
-            
+
             QrTextField(
                 value = email,
                 onValueChange = viewModel::updateEmailAddress,
@@ -384,7 +401,7 @@ private fun QrForm(
         QrType.SMS -> {
             val number by viewModel.smsNumber.collectAsState()
             val message by viewModel.smsMessage.collectAsState()
-            
+
             QrTextField(
                 value = number,
                 onValueChange = viewModel::updateSmsNumber,
@@ -406,7 +423,7 @@ private fun QrForm(
             val phone by viewModel.contactPhone.collectAsState()
             val email by viewModel.contactEmail.collectAsState()
             val company by viewModel.contactCompany.collectAsState()
-            
+
             QrTextField(
                 value = name,
                 onValueChange = viewModel::updateContactName,
@@ -441,7 +458,7 @@ private fun QrForm(
             val lat by viewModel.geoLatitude.collectAsState()
             val lng by viewModel.geoLongitude.collectAsState()
             val label by viewModel.geoLabel.collectAsState()
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -519,7 +536,7 @@ private fun WifiSecurityDropdown(
     onSelected: (WifiSecurityType) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    
+
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = it }
@@ -545,7 +562,7 @@ private fun WifiSecurityDropdown(
             ),
             shape = RoundedCornerShape(12.dp)
         )
-        
+
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
@@ -634,7 +651,7 @@ private fun QrPreviewSection(
             fontSize = 14.sp,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-        
+
         Card(
             colors = CardDefaults.cardColors(
                 containerColor = Color.White
@@ -650,9 +667,9 @@ private fun QrPreviewSection(
                     .padding(16.dp)
             )
         }
-        
+
         Spacer(modifier = Modifier.height(20.dp))
-        
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -666,7 +683,7 @@ private fun QrPreviewSection(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(stringResource(R.string.save))
             }
-            
+
             Button(
                 onClick = onShare,
                 colors = ButtonDefaults.buttonColors(
