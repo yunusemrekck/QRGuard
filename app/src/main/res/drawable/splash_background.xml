@@ -1,0 +1,8 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="#0A1628" />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/il_splash" />
+    </item>
+</layer-list>
