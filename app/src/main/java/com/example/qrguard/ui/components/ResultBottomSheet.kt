@@ -25,8 +25,6 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -45,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -234,7 +233,7 @@ private fun SecurityWarningBanner(warning: SecurityWarning) {
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Icon(
-            imageVector = Icons.Default.Warning,
+            painter = painterResource(id = R.drawable.ic_security_warning),
             contentDescription = null,
             tint = color,
             modifier = Modifier.size(20.dp)
@@ -338,7 +337,10 @@ private fun TypeSpecificActionButton(
                     containerColor = qrContent.type.color
                 )
             ) {
-                Icon(Icons.Default.Wifi, contentDescription = null)
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_wifi_qr),
+                    contentDescription = null
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(stringResource(R.string.connect_wifi))
             }

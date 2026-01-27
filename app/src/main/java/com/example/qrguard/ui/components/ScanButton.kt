@@ -15,9 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.Image
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,6 +27,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -92,10 +91,11 @@ fun ScanButton(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            QrCodeIcon(
-                size = 48.dp,
-                color = Color.White,
-                strokeWidth = 2.5f
+            // Use the project-provided scan icon for consistent branding.
+            Image(
+                painter = painterResource(id = R.drawable.ic_scan_qr),
+                contentDescription = stringResource(R.string.scan_qr_code),
+                modifier = Modifier.size(48.dp)
             )
             Text(
                 text = stringResource(R.string.scan_qr_code),
@@ -162,10 +162,10 @@ fun CreateButton(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = null,
-                tint = Color.White,
+            // Use the project-provided create icon for consistent branding.
+            Image(
+                painter = painterResource(id = R.drawable.ic_create_qr),
+                contentDescription = stringResource(R.string.create_qr_code),
                 modifier = Modifier.size(48.dp)
             )
             Text(
