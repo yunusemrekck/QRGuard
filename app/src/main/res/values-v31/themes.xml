@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.QRGuard.Splash" parent="Theme.SplashScreen">
+    <style name="Theme.QRGuard.Splash" parent="Theme.QRGuard">
         <item name="windowSplashScreenBackground">#0A1628</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/il_splash</item>
         <item name="postSplashScreenTheme">@style/Theme.QRGuard</item>
