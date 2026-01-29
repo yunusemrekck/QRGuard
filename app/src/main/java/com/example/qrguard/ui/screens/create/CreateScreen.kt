@@ -50,6 +50,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -91,6 +92,22 @@ fun CreateScreen(
     val saveSuccess by viewModel.saveSuccess.collectAsState()
     val foregroundColor by viewModel.foregroundColor.collectAsState()
     val backgroundColor by viewModel.backgroundColor.collectAsState()
+    
+    // Form input states for validation
+    val textInput by viewModel.textInput.collectAsState()
+    val urlInput by viewModel.urlInput.collectAsState()
+    val wifiSsid by viewModel.wifiSsid.collectAsState()
+    val emailAddress by viewModel.emailAddress.collectAsState()
+    val phoneNumber by viewModel.phoneNumber.collectAsState()
+    val smsNumber by viewModel.smsNumber.collectAsState()
+    val contactName by viewModel.contactName.collectAsState()
+    val geoLatitude by viewModel.geoLatitude.collectAsState()
+    val geoLongitude by viewModel.geoLongitude.collectAsState()
+    
+    // Form validity - reactive to input changes
+    val isFormValid by remember(selectedType, textInput, urlInput, wifiSsid, emailAddress, phoneNumber, smsNumber, contactName, geoLatitude, geoLongitude) {
+        derivedStateOf { viewModel.isFormValid() }
+    }
     
     LaunchedEffect(saveSuccess) {
         saveSuccess?.let { success ->
@@ -217,7 +234,7 @@ fun CreateScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
                         .height(50.dp),
-                    enabled = viewModel.isFormValid() && !isLoading,
+                    enabled = isFormValid && !isLoading,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = AccentBlue
                     ),
