@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -92,6 +93,23 @@ val bottomNavItems = listOf(
     Screen.History
 )
 
+// ✅ EKLENEN HELPER FUNCTIONS
+private fun NavController.navigateToBottomNavDestination(route: String) {
+    navigate(route) {
+        popUpTo(graph.findStartDestination().id) {
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
+    }
+}
+
+private fun NavController.navigateToScreen(route: String) {
+    navigate(route) {
+        launchSingleTop = true
+    }
+}
+
 @Composable
 fun QrGuardNavHost(
     modifier: Modifier = Modifier,
@@ -99,7 +117,7 @@ fun QrGuardNavHost(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    
+
     val showBottomBar = currentDestination?.route in bottomNavItems.map { it.route }
 
     Scaffold(
@@ -113,7 +131,7 @@ fun QrGuardNavHost(
                 ) {
                     bottomNavItems.forEach { screen ->
                         val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
-                        
+
                         NavigationBarItem(
                             icon = {
                                 Icon(
@@ -157,38 +175,50 @@ fun QrGuardNavHost(
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(
-                    onScanClick = { navController.navigate(Screen.Scan.route) },
-                    onCreateClick = { navController.navigate(Screen.Create.route) },
-                    onHistoryClick = { navController.navigate(Screen.History.route) },
-                    onFavoritesClick = { navController.navigate(Screen.Favorites.route) },
-                    onSettingsClick = { navController.navigate(Screen.Settings.route) }
+                    // ✅ DÜZELTİLDİ: Bottom nav davranışı ile navigate et
+                    onScanClick = {
+                        navController.navigateToBottomNavDestination(Screen.Scan.route)
+                    },
+                    onCreateClick = {
+                        navController.navigateToBottomNavDestination(Screen.Create.route)
+                    },
+                    onHistoryClick = {
+                        navController.navigateToBottomNavDestination(Screen.History.route)
+                    },
+                    // ✅ Favorites ve Settings normal navigate (bottom nav'de değiller)
+                    onFavoritesClick = {
+                        navController.navigateToScreen(Screen.Favorites.route)
+                    },
+                    onSettingsClick = {
+                        navController.navigateToScreen(Screen.Settings.route)
+                    }
                 )
             }
-            
+
             composable(Screen.Scan.route) {
                 ScanScreen(
                     onNavigateBack = { navController.popBackStack() }
                 )
             }
-            
+
             composable(Screen.Create.route) {
                 CreateScreen(
                     onNavigateBack = { navController.popBackStack() }
                 )
             }
-            
+
             composable(Screen.History.route) {
                 HistoryScreen(
                     onNavigateBack = { navController.popBackStack() }
                 )
             }
-            
+
             composable(Screen.Favorites.route) {
                 FavoritesScreen(
                     onNavigateBack = { navController.popBackStack() }
                 )
             }
-            
+
             composable(Screen.Settings.route) {
                 SettingsScreen(
                     onNavigateBack = { navController.popBackStack() }
