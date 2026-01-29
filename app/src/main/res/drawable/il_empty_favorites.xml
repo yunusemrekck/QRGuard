@@ -1,12 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="120dp"
     android:height="120dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Star outline -->
     <path
-        android:fillColor="@android:color/transparent"
-        android:pathData="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.63L12,2L9.19,8.63L2,9.24L7.46,13.97L5.82,21Z"
-        android:strokeColor="#FFD700"
-        android:strokeLineJoin="round"
-        android:strokeWidth="1.5" />
+        android:fillColor="#8BA4B8"
+        android:pathData="M60,15 L72,45 L105,48 L80,70 L87,103 L60,87 L33,103 L40,70 L15,48 L48,45 Z" />
+
+    <!-- Star inner highlight -->
+    <path
+        android:fillColor="#B8CCD9"
+        android:pathData="M60,28 L68,48 L90,50 L73,65 L78,87 L60,76 L42,87 L47,65 L30,50 L52,48 Z" />
+
+    <!-- Star center accent -->
+    <path
+        android:fillColor="#FFD700"
+        android:fillAlpha="0.6"
+        android:pathData="M60,40 L65,53 L79,54 L68,63 L71,77 L60,70 L49,77 L52,63 L41,54 L55,53 Z" />
 </vector>

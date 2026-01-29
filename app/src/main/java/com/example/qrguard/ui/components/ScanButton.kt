@@ -95,12 +95,12 @@ fun ScanButton(
             Image(
                 painter = painterResource(id = R.drawable.ic_scan_qr),
                 contentDescription = stringResource(R.string.scan_qr_code),
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier.size(80.dp)
             )
             Text(
                 text = stringResource(R.string.scan_qr_code),
                 color = Color.White,
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 0.5.sp
             )
@@ -166,12 +166,12 @@ fun CreateButton(
             Image(
                 painter = painterResource(id = R.drawable.ic_create_qr),
                 contentDescription = stringResource(R.string.create_qr_code),
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier.size(80.dp)
             )
             Text(
                 text = stringResource(R.string.create_qr_code),
                 color = Color.White,
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 0.5.sp
             )
