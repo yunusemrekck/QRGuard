@@ -40,6 +40,7 @@ import com.example.qrguard.ui.components.CompactActionCard
 import com.example.qrguard.ui.components.CreateButton
 import com.example.qrguard.ui.components.GradientBackground
 import com.example.qrguard.ui.components.QuickAccessChip
+import com.example.qrguard.ui.components.QrCodeIcon
 import com.example.qrguard.ui.components.RecentScanItem
 import com.example.qrguard.ui.components.ScanButton
 import com.example.qrguard.ui.theme.AccentBlue
@@ -292,7 +293,10 @@ private fun EmptyRecentScans() {
             .padding(40.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Custom empty state illustration
+        /*QrCodeIcon(
+            size = 96.dp,
+            color = TextSecondary
+        )*/
         Image(
             painter = painterResource(id = R.drawable.il_empty_history),
             contentDescription = null,
