@@ -27,7 +27,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.qrguard.BuildConfig
 import com.example.qrguard.R
 import com.example.qrguard.data.preferences.AppLanguage
-import com.example.qrguard.data.preferences.AppTheme
 import com.example.qrguard.ui.components.GradientBackground
 import com.example.qrguard.ui.theme.*
 
@@ -39,13 +38,11 @@ fun SettingsScreen(
 ) {
     val context = LocalContext.current
     val language by viewModel.language.collectAsState()
-    val theme by viewModel.theme.collectAsState()
     val vibrationEnabled by viewModel.vibrationEnabled.collectAsState()
     val soundEnabled by viewModel.soundEnabled.collectAsState()
     val autoCopyEnabled by viewModel.autoCopyEnabled.collectAsState()
-    
+
     var showLanguageDialog by remember { mutableStateOf(false) }
-    var showThemeDialog by remember { mutableStateOf(false) }
     var showAboutDialog by remember { mutableStateOf(false) }
 
     GradientBackground {
@@ -74,12 +71,12 @@ fun SettingsScreen(
                     )
                 }
             }
-            
+
             // General Section
             item {
                 SettingsSectionHeader(title = stringResource(R.string.settings_general))
             }
-            
+
             item {
                 SettingsCard {
                     // Language
@@ -89,24 +86,14 @@ fun SettingsScreen(
                         subtitle = getLanguageDisplayName(language),
                         onClick = { showLanguageDialog = true }
                     )
-                    
-                    SettingsDivider()
-                    
-                    // Theme
-                    SettingsItem(
-                        icon = Icons.Outlined.Palette,
-                        title = stringResource(R.string.settings_theme),
-                        subtitle = getThemeDisplayName(theme),
-                        onClick = { showThemeDialog = true }
-                    )
                 }
             }
-            
+
             // Scan Settings Section
             item {
                 SettingsSectionHeader(title = stringResource(R.string.settings_appearance))
             }
-            
+
             item {
                 SettingsCard {
                     // Vibration
@@ -116,9 +103,9 @@ fun SettingsScreen(
                         checked = vibrationEnabled,
                         onCheckedChange = viewModel::setVibrationEnabled
                     )
-                    
+
                     SettingsDivider()
-                    
+
                     // Sound
                     SettingsSwitchItem(
                         icon = Icons.Outlined.VolumeUp,
@@ -126,9 +113,9 @@ fun SettingsScreen(
                         checked = soundEnabled,
                         onCheckedChange = viewModel::setSoundEnabled
                     )
-                    
+
                     SettingsDivider()
-                    
+
                     // Auto Copy
                     SettingsSwitchItem(
                         icon = Icons.Outlined.ContentCopy,
@@ -138,12 +125,12 @@ fun SettingsScreen(
                     )
                 }
             }
-            
+
             // About Section
             item {
                 SettingsSectionHeader(title = stringResource(R.string.settings_about))
             }
-            
+
             item {
                 SettingsCard {
                     // About App
@@ -153,9 +140,9 @@ fun SettingsScreen(
                         subtitle = stringResource(R.string.about_version, BuildConfig.VERSION_NAME),
                         onClick = { showAboutDialog = true }
                     )
-                    
+
                     SettingsDivider()
-                    
+
                     // Rate App
                     SettingsItem(
                         icon = Icons.Outlined.Star,
@@ -170,9 +157,9 @@ fun SettingsScreen(
                             }
                         }
                     )
-                    
+
                     SettingsDivider()
-                    
+
                     // Share App
                     SettingsItem(
                         icon = Icons.Outlined.Share,
@@ -187,7 +174,7 @@ fun SettingsScreen(
                     )
                 }
             }
-            
+
             // Version Footer
             item {
                 Spacer(modifier = Modifier.height(24.dp))
@@ -204,7 +191,7 @@ fun SettingsScreen(
             }
         }
     }
-    
+
     // Language Dialog
     if (showLanguageDialog) {
         LanguageSelectionDialog(
@@ -216,19 +203,7 @@ fun SettingsScreen(
             onDismiss = { showLanguageDialog = false }
         )
     }
-    
-    // Theme Dialog
-    if (showThemeDialog) {
-        ThemeSelectionDialog(
-            currentTheme = theme,
-            onThemeSelected = {
-                viewModel.setTheme(it)
-                showThemeDialog = false
-            },
-            onDismiss = { showThemeDialog = false }
-        )
-    }
-    
+
     // About Dialog
     if (showAboutDialog) {
         AboutDialog(onDismiss = { showAboutDialog = false })
@@ -401,65 +376,6 @@ private fun LanguageOption(
 }
 
 @Composable
-private fun ThemeSelectionDialog(
-    currentTheme: AppTheme,
-    onThemeSelected: (AppTheme) -> Unit,
-    onDismiss: () -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.settings_theme), fontWeight = FontWeight.Bold) },
-        text = {
-            Column {
-                ThemeOption(
-                    title = stringResource(R.string.settings_theme_system),
-                    isSelected = currentTheme == AppTheme.SYSTEM,
-                    onClick = { onThemeSelected(AppTheme.SYSTEM) }
-                )
-                ThemeOption(
-                    title = stringResource(R.string.settings_theme_light),
-                    isSelected = currentTheme == AppTheme.LIGHT,
-                    onClick = { onThemeSelected(AppTheme.LIGHT) }
-                )
-                ThemeOption(
-                    title = stringResource(R.string.settings_theme_dark),
-                    isSelected = currentTheme == AppTheme.DARK,
-                    onClick = { onThemeSelected(AppTheme.DARK) }
-                )
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.close))
-            }
-        }
-    )
-}
-
-@Composable
-private fun ThemeOption(
-    title: String,
-    isSelected: Boolean,
-    onClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        RadioButton(
-            selected = isSelected,
-            onClick = onClick,
-            colors = RadioButtonDefaults.colors(selectedColor = AccentBlue)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = title)
-    }
-}
-
-@Composable
 private fun AboutDialog(onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -531,14 +447,5 @@ private fun getLanguageDisplayName(language: AppLanguage): String {
         AppLanguage.SYSTEM -> stringResource(R.string.settings_language_system)
         AppLanguage.TURKISH -> stringResource(R.string.settings_language_turkish)
         AppLanguage.ENGLISH -> stringResource(R.string.settings_language_english)
-    }
-}
-
-@Composable
-private fun getThemeDisplayName(theme: AppTheme): String {
-    return when (theme) {
-        AppTheme.SYSTEM -> stringResource(R.string.settings_theme_system)
-        AppTheme.LIGHT -> stringResource(R.string.settings_theme_light)
-        AppTheme.DARK -> stringResource(R.string.settings_theme_dark)
     }
 }

@@ -13,16 +13,15 @@ import kotlinx.coroutines.flow.map
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class AppPreferences(private val context: Context) {
-    
+
     companion object {
         private val LANGUAGE_KEY = stringPreferencesKey("language")
-        private val THEME_KEY = stringPreferencesKey("theme")
         private val VIBRATION_KEY = booleanPreferencesKey("vibration")
         private val SOUND_KEY = booleanPreferencesKey("sound")
         private val AUTO_COPY_KEY = booleanPreferencesKey("auto_copy")
         private val FIRST_LAUNCH_KEY = booleanPreferencesKey("first_launch")
     }
-    
+
     val language: Flow<AppLanguage> = context.dataStore.data.map { preferences ->
         when (preferences[LANGUAGE_KEY]) {
             "tr" -> AppLanguage.TURKISH
@@ -30,31 +29,23 @@ class AppPreferences(private val context: Context) {
             else -> AppLanguage.SYSTEM
         }
     }
-    
-    val theme: Flow<AppTheme> = context.dataStore.data.map { preferences ->
-        when (preferences[THEME_KEY]) {
-            "light" -> AppTheme.LIGHT
-            "dark" -> AppTheme.DARK
-            else -> AppTheme.SYSTEM
-        }
-    }
-    
+
     val vibrationEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[VIBRATION_KEY] ?: true
     }
-    
+
     val soundEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[SOUND_KEY] ?: true
     }
-    
+
     val autoCopyEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[AUTO_COPY_KEY] ?: false
     }
-    
+
     val isFirstLaunch: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[FIRST_LAUNCH_KEY] ?: true
     }
-    
+
     suspend fun setLanguage(language: AppLanguage) {
         context.dataStore.edit { preferences ->
             preferences[LANGUAGE_KEY] = when (language) {
@@ -64,35 +55,25 @@ class AppPreferences(private val context: Context) {
             }
         }
     }
-    
-    suspend fun setTheme(theme: AppTheme) {
-        context.dataStore.edit { preferences ->
-            preferences[THEME_KEY] = when (theme) {
-                AppTheme.LIGHT -> "light"
-                AppTheme.DARK -> "dark"
-                AppTheme.SYSTEM -> "system"
-            }
-        }
-    }
-    
+
     suspend fun setVibrationEnabled(enabled: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[VIBRATION_KEY] = enabled
         }
     }
-    
+
     suspend fun setSoundEnabled(enabled: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[SOUND_KEY] = enabled
         }
     }
-    
+
     suspend fun setAutoCopyEnabled(enabled: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[AUTO_COPY_KEY] = enabled
         }
     }
-    
+
     suspend fun setFirstLaunchCompleted() {
         context.dataStore.edit { preferences ->
             preferences[FIRST_LAUNCH_KEY] = false
@@ -102,8 +83,4 @@ class AppPreferences(private val context: Context) {
 
 enum class AppLanguage {
     SYSTEM, TURKISH, ENGLISH
-}
-
-enum class AppTheme {
-    SYSTEM, LIGHT, DARK
 }
