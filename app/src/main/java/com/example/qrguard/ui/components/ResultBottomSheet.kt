@@ -34,10 +34,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -70,147 +71,158 @@ import com.example.qrguard.ui.theme.WarningRed
 @Composable
 fun ResultBottomSheet(
     qrContent: QrContent,
-    sheetState: SheetState,
+    isVisible: Boolean,
     onDismiss: () -> Unit,
     onFavoriteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val context = LocalContext.current
 
-    ModalBottomSheet(
-        onDismissRequest = onDismiss,
-        sheetState = sheetState,
-        containerColor = GradientStart,
-        modifier = modifier
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-                .padding(bottom = 24.dp)
-                .navigationBarsPadding(),
-            horizontalAlignment = Alignment.CenterHorizontally
+    LaunchedEffect(isVisible) {
+        if (isVisible) {
+            sheetState.show()
+        } else {
+            sheetState.hide()
+        }
+    }
+
+    if (isVisible) {
+        ModalBottomSheet(
+            onDismissRequest = onDismiss,
+            sheetState = sheetState,
+            containerColor = GradientStart,
+            modifier = modifier
         ) {
-            // Başlık ve Favori
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.scan_result),
-                    color = TextPrimary,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                
-                IconButton(onClick = onFavoriteClick) {
-                    Icon(
-                        imageVector = if (qrContent.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                        contentDescription = null,
-                        tint = if (qrContent.isFavorite) FavoriteActive else FavoriteInactive,
-                        modifier = Modifier.size(28.dp)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Tür göstergesi
-            Row(
+            Column(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(qrContent.type.color.copy(alpha = 0.15f))
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 24.dp)
+                    .navigationBarsPadding(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Icon(
-                    imageVector = qrContent.type.icon,
-                    contentDescription = null,
-                    tint = qrContent.type.color,
-                    modifier = Modifier.size(22.dp)
-                )
-                Text(
-                    text = stringResource(qrContent.type.labelResId),
-                    color = qrContent.type.color,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Güvenlik Uyarısı
-            qrContent.securityWarning?.let { warning ->
-                SecurityWarningBanner(warning = warning)
-                Spacer(modifier = Modifier.height(12.dp))
-            }
-
-            // Ham içerik
-            Surface(
-                color = CardBackground,
-                shape = RoundedCornerShape(16.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
+                // Başlık ve Favori
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = qrContent.rawValue,
+                        text = stringResource(R.string.scan_result),
                         color = TextPrimary,
-                        fontSize = 15.sp,
-                        maxLines = 6,
-                        overflow = TextOverflow.Ellipsis
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
                     )
-                    
-                    // Parsed data varsa göster
-                    qrContent.parsedData?.let { data ->
-                        Spacer(modifier = Modifier.height(12.dp))
-                        ParsedDataSection(data = data)
+
+                    IconButton(onClick = onFavoriteClick) {
+                        Icon(
+                            imageVector = if (qrContent.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
+                            contentDescription = null,
+                            tint = if (qrContent.isFavorite) FavoriteActive else FavoriteInactive,
+                            modifier = Modifier.size(28.dp)
+                        )
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            // Aksiyon butonları
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                OutlinedButton(
-                    onClick = { copyToClipboard(context, qrContent.rawValue) },
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        contentColor = TextPrimary
-                    )
+                // Tür göstergesi
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(qrContent.type.color.copy(alpha = 0.15f))
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Icon(Icons.Default.ContentCopy, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(stringResource(R.string.copy), fontSize = 13.sp)
+                    Icon(
+                        imageVector = qrContent.type.icon,
+                        contentDescription = null,
+                        tint = qrContent.type.color,
+                        modifier = Modifier.size(22.dp)
+                    )
+                    Text(
+                        text = stringResource(qrContent.type.labelResId),
+                        color = qrContent.type.color,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
                 }
 
-                FilledTonalButton(
-                    onClick = { shareContent(context, qrContent.rawValue) },
-                    modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.filledTonalButtonColors(
-                        containerColor = CardBackground,
-                        contentColor = TextPrimary
-                    )
-                ) {
-                    Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(stringResource(R.string.share), fontSize = 13.sp)
-                }
-            }
+                Spacer(modifier = Modifier.height(16.dp))
 
-            // Türe özel aksiyon butonu
-            Spacer(modifier = Modifier.height(8.dp))
-            TypeSpecificActionButton(
-                qrContent = qrContent,
-                context = context
-            )
+                // Güvenlik Uyarısı
+                qrContent.securityWarning?.let { warning ->
+                    SecurityWarningBanner(warning = warning)
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+
+                // Ham içerik
+                Surface(
+                    color = CardBackground,
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(
+                            text = qrContent.rawValue,
+                            color = TextPrimary,
+                            fontSize = 15.sp,
+                            maxLines = 6,
+                            overflow = TextOverflow.Ellipsis
+                        )
+
+                        // Parsed data varsa göster
+                        qrContent.parsedData?.let { data ->
+                            Spacer(modifier = Modifier.height(12.dp))
+                            ParsedDataSection(data = data)
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // Aksiyon butonları
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = { copyToClipboard(context, qrContent.rawValue) },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = TextPrimary
+                        )
+                    ) {
+                        Icon(Icons.Default.ContentCopy, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(stringResource(R.string.copy), fontSize = 13.sp)
+                    }
+
+                    FilledTonalButton(
+                        onClick = { shareContent(context, qrContent.rawValue) },
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.filledTonalButtonColors(
+                            containerColor = CardBackground,
+                            contentColor = TextPrimary
+                        )
+                    ) {
+                        Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(stringResource(R.string.share), fontSize = 13.sp)
+                    }
+                }
+
+                // Türe özel aksiyon butonu
+                Spacer(modifier = Modifier.height(8.dp))
+                TypeSpecificActionButton(
+                    qrContent = qrContent,
+                    context = context
+                )
+            }
         }
     }
 }
@@ -222,7 +234,7 @@ private fun SecurityWarningBanner(warning: SecurityWarning) {
         SecurityWarning.SUSPICIOUS_URL -> stringResource(R.string.warning_suspicious_url) to WarningRed
         SecurityWarning.SHORT_URL -> stringResource(R.string.warning_short_url) to WarningOrange
     }
-    
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -348,7 +360,7 @@ private fun TypeSpecificActionButton(
         QrContentType.PHONE -> {
             val phoneData = qrContent.parsedData as? ParsedQrData.PhoneData
             Button(
-                onClick = { 
+                onClick = {
                     phoneData?.let { dialPhone(context, it.number) }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -364,7 +376,7 @@ private fun TypeSpecificActionButton(
         QrContentType.EMAIL -> {
             val emailData = qrContent.parsedData as? ParsedQrData.EmailData
             Button(
-                onClick = { 
+                onClick = {
                     emailData?.let { sendEmail(context, it.address, it.subject, it.body) }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -380,7 +392,7 @@ private fun TypeSpecificActionButton(
         QrContentType.SMS -> {
             val smsData = qrContent.parsedData as? ParsedQrData.SmsData
             Button(
-                onClick = { 
+                onClick = {
                     smsData?.let { sendSms(context, it.number, it.message) }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -396,7 +408,7 @@ private fun TypeSpecificActionButton(
         QrContentType.GEO -> {
             val geoData = qrContent.parsedData as? ParsedQrData.GeoData
             Button(
-                onClick = { 
+                onClick = {
                     geoData?.let { openMap(context, it.latitude, it.longitude, it.label) }
                 },
                 modifier = Modifier.fillMaxWidth(),

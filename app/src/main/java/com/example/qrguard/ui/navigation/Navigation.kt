@@ -93,7 +93,6 @@ val bottomNavItems = listOf(
     Screen.History
 )
 
-// ✅ EKLENEN HELPER FUNCTIONS
 private fun NavController.navigateToBottomNavDestination(route: String) {
     navigate(route) {
         popUpTo(graph.findStartDestination().id) {
@@ -175,7 +174,6 @@ fun QrGuardNavHost(
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(
-                    // ✅ DÜZELTİLDİ: Bottom nav davranışı ile navigate et
                     onScanClick = {
                         navController.navigateToBottomNavDestination(Screen.Scan.route)
                     },
@@ -185,7 +183,6 @@ fun QrGuardNavHost(
                     onHistoryClick = {
                         navController.navigateToBottomNavDestination(Screen.History.route)
                     },
-                    // ✅ Favorites ve Settings normal navigate (bottom nav'de değiller)
                     onFavoritesClick = {
                         navController.navigateToScreen(Screen.Favorites.route)
                     },

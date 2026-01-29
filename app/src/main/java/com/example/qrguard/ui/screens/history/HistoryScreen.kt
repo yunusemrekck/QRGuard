@@ -24,6 +24,7 @@ import com.example.qrguard.R
 import com.example.qrguard.domain.model.QrContentType
 import com.example.qrguard.ui.components.GradientBackground
 import com.example.qrguard.ui.components.QuickAccessChip
+import com.example.qrguard.ui.components.ResultBottomSheet
 import com.example.qrguard.ui.components.ScanHistoryItem
 import com.example.qrguard.ui.theme.*
 
@@ -35,6 +36,7 @@ fun HistoryScreen(
     val filteredScans by viewModel.filteredScans.collectAsState()
     val selectedFilter by viewModel.selectedFilter.collectAsState()
     val showClearDialog by viewModel.showClearDialog.collectAsState()
+    val selectedQrContent by viewModel.selectedQrContent.collectAsState()
 
     GradientBackground {
         Column(
@@ -64,7 +66,7 @@ fun HistoryScreen(
                         fontWeight = FontWeight.Bold
                     )
                 }
-                
+
                 if (filteredScans.isNotEmpty()) {
                     IconButton(onClick = viewModel::showClearHistoryDialog, modifier = Modifier.size(40.dp)) {
                         Icon(Icons.Default.DeleteSweep, stringResource(R.string.clear_history), tint = WarningRed)
@@ -105,7 +107,7 @@ fun HistoryScreen(
                     items(items = filteredScans, key = { it.id }) { scan ->
                         ScanHistoryItem(
                             scan = scan,
-                            onClick = { },
+                            onClick = { viewModel.onScanItemClick(scan) },
                             onFavoriteClick = { viewModel.toggleFavorite(scan) },
                             onDeleteClick = { viewModel.deleteScan(scan) }
                         )
@@ -113,6 +115,15 @@ fun HistoryScreen(
                 }
             }
         }
+    }
+
+    selectedQrContent?.let { qrContent ->
+        ResultBottomSheet(
+            qrContent = qrContent,
+            isVisible = true,
+            onDismiss = viewModel::dismissBottomSheet,
+            onFavoriteClick = { viewModel.toggleFavorite(qrContent) }
+        )
     }
 
     if (showClearDialog) {

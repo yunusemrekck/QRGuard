@@ -42,6 +42,7 @@ import com.example.qrguard.ui.components.GradientBackground
 import com.example.qrguard.ui.components.QuickAccessChip
 import com.example.qrguard.ui.components.QrCodeIcon
 import com.example.qrguard.ui.components.RecentScanItem
+import com.example.qrguard.ui.components.ResultBottomSheet
 import com.example.qrguard.ui.components.ScanButton
 import com.example.qrguard.ui.theme.AccentBlue
 import com.example.qrguard.ui.theme.AccentGold
@@ -67,6 +68,7 @@ fun HomeScreen(
     val totalCount by viewModel.totalCount.collectAsState()
     val favoritesCount by viewModel.favoritesCount.collectAsState()
     val selectedFilter by viewModel.selectedFilter.collectAsState()
+    val selectedQrContent by viewModel.selectedQrContent.collectAsState()
 
     GradientBackground {
         LazyColumn(
@@ -156,13 +158,22 @@ fun HomeScreen(
                 ) { scan ->
                     RecentScanItem(
                         scan = scan,
-                        onClick = { },
+                        onClick = { viewModel.onScanItemClick(scan) },
                         onFavoriteClick = { viewModel.toggleFavorite(scan) },
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp)
                     )
                 }
             }
         }
+    }
+
+    selectedQrContent?.let { qrContent ->
+        ResultBottomSheet(
+            qrContent = qrContent,
+            isVisible = true,
+            onDismiss = viewModel::dismissBottomSheet,
+            onFavoriteClick = { viewModel.toggleFavorite(qrContent) }
+        )
     }
 }
 
@@ -293,10 +304,6 @@ private fun EmptyRecentScans() {
             .padding(40.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        /*QrCodeIcon(
-            size = 96.dp,
-            color = TextSecondary
-        )*/
         Image(
             painter = painterResource(id = R.drawable.il_empty_history),
             contentDescription = null,

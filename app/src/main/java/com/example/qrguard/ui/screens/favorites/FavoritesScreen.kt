@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.qrguard.R
 import com.example.qrguard.ui.components.GradientBackground
+import com.example.qrguard.ui.components.ResultBottomSheet
 import com.example.qrguard.ui.components.ScanHistoryItem
 import com.example.qrguard.ui.theme.*
 
@@ -28,6 +29,7 @@ fun FavoritesScreen(
     viewModel: FavoritesViewModel = viewModel()
 ) {
     val favorites by viewModel.favorites.collectAsState()
+    val selectedQrContent by viewModel.selectedQrContent.collectAsState()
 
     GradientBackground {
         Column(
@@ -76,13 +78,22 @@ fun FavoritesScreen(
                     items(items = favorites, key = { it.id }) { scan ->
                         ScanHistoryItem(
                             scan = scan,
-                            onClick = { },
-                            onFavoriteClick = { viewModel.removeFavorite(scan) },
+                            onClick = { viewModel.onScanItemClick(scan) },
+                            onFavoriteClick = { viewModel.toggleFavorite(scan) },
                             onDeleteClick = { viewModel.deleteScan(scan) }
                         )
                     }
                 }
             }
         }
+    }
+
+    selectedQrContent?.let { qrContent ->
+        ResultBottomSheet(
+            qrContent = qrContent,
+            isVisible = true,
+            onDismiss = viewModel::dismissBottomSheet,
+            onFavoriteClick = { viewModel.toggleFavorite(qrContent) }
+        )
     }
 }

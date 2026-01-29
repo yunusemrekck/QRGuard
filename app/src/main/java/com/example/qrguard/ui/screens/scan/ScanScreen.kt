@@ -176,19 +176,16 @@ fun ScanScreen(
                 }
 
                 currentScan?.let { scan ->
-                    if (scannerState is ScannerState.Result) {
-                        ResultBottomSheet(
-                            qrContent = scan,
-                            sheetState = sheetState,
-                            onDismiss = {
-                                scope.launch {
-                                    sheetState.hide()
-                                    viewModel.onResultDismissed()
-                                }
-                            },
-                            onFavoriteClick = viewModel::toggleFavorite
-                        )
-                    }
+                    ResultBottomSheet(
+                        qrContent = scan,
+                        isVisible = scannerState is ScannerState.Result,
+                        onDismiss = {
+                            scope.launch {
+                                viewModel.onResultDismissed()
+                            }
+                        },
+                        onFavoriteClick = viewModel::toggleFavorite
+                    )
                 }
             }
 
