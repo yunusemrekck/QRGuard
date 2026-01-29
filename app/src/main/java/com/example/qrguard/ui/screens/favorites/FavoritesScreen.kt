@@ -1,5 +1,6 @@
 package com.example.qrguard.ui.screens.favorites
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -56,7 +58,11 @@ fun FavoritesScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "⭐", fontSize = 64.sp)
+                    Image(
+                        painter = painterResource(id = R.drawable.il_empty_favorites),
+                        contentDescription = null,
+                        modifier = Modifier.size(120.dp)
+                    )
                     Spacer(modifier = Modifier.height(20.dp))
                     Text(stringResource(R.string.favorites_empty), color = TextPrimary, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
                     Spacer(modifier = Modifier.height(8.dp))

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Clipboard body - main shape -->
+    <path
+        android:fillColor="#8BA4B8"
+        android:pathData="M30,28 L30,100 C30,104 33,107 37,107 L83,107 C87,107 90,104 90,100 L90,28 C90,24 87,21 83,21 L37,21 C33,21 30,24 30,28 Z" />
+
+    <!-- Clipboard inner area (lighter) -->
+    <path
+        android:fillColor="#B8CCD9"
+        android:pathData="M36,35 L84,35 L84,100 L36,100 Z" />
+
+    <!-- Clipboard clip at top -->
+    <path
+        android:fillColor="#6B8CA8"
+        android:pathData="M45,13 L75,13 C77.5,13 79,14.5 79,17 L79,28 L41,28 L41,17 C41,14.5 42.5,13 45,13 Z" />
+
+    <!-- Clipboard clip hole (inner) -->
+    <path
+        android:fillColor="#B8CCD9"
+        android:pathData="M50,17 L70,17 C71.5,17 72,18 72,19 L72,24 L48,24 L48,19 C48,18 48.5,17 50,17 Z" />
+
+    <!-- List line 1 -->
+    <path
+        android:fillColor="#7A9BB0"
+        android:pathData="M42,48 L78,48 L78,52 L42,52 Z" />
+
+    <!-- List line 2 -->
+    <path
+        android:fillColor="#7A9BB0"
+        android:pathData="M42,60 L78,60 L78,64 L42,64 Z" />
+
+    <!-- List line 3 (shorter) -->
+    <path
+        android:fillColor="#7A9BB0"
+        android:pathData="M42,72 L65,72 L65,76 L42,76 Z" />
+
+    <!-- Small QR code icon -->
+    <path
+        android:fillColor="#5A7A94"
+        android:pathData="M67,80 L82,80 L82,95 L67,95 Z" />
+
+    <!-- QR code inner squares -->
+    <path
+        android:fillColor="#B8CCD9"
+        android:pathData="M69,82 L73,82 L73,86 L69,86 Z" />
+    <path
+        android:fillColor="#B8CCD9"
+        android:pathData="M76,82 L80,82 L80,86 L76,86 Z" />
+    <path
+        android:fillColor="#B8CCD9"
+        android:pathData="M69,89 L73,89 L73,93 L69,93 Z" />
+    <path
+        android:fillColor="#5A7A94"
+        android:pathData="M76,89 L78,89 L78,91 L76,91 Z" />
+    <path
+        android:fillColor="#B8CCD9"
+        android:pathData="M78,91 L80,91 L80,93 L78,93 Z" />
+</vector>

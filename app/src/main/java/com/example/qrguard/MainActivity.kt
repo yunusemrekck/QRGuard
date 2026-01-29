@@ -6,9 +6,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.example.qrguard.data.preferences.AppPreferences
 import com.example.qrguard.data.preferences.AppTheme
@@ -36,12 +37,14 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         
         setContent {
-            val theme by preferences.theme.collectAsState(initial = AppTheme.SYSTEM)
+            // Lifecycle-aware state collection for better performance and safety.
+            val theme by preferences.theme.collectAsStateWithLifecycle(initialValue = AppTheme.SYSTEM)
             
             val isDarkTheme = when (theme) {
                 AppTheme.LIGHT -> false
                 AppTheme.DARK -> true
-                AppTheme.SYSTEM -> true // Varsayılan dark
+                // Use system setting instead of forcing dark theme.
+                AppTheme.SYSTEM -> isSystemInDarkTheme()
             }
             
             QRGuardTheme(darkTheme = isDarkTheme) {
