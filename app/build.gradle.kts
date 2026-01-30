@@ -6,17 +6,17 @@ plugins {
 }
 
 android {
-    namespace = "com.example.qrguard"
+    namespace = "com.yunusek.qrguard"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.qrguard"
+        applicationId = "com.yunusek.qrguard"
         minSdk = 26
         targetSdk = 35
         versionCode = 4
         versionName = "26.2.1"
     }
-    
+
     buildFeatures {
         compose = true
         buildConfig = true
@@ -83,6 +83,9 @@ dependencies {
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
+
+    // ✅ EKLE: Play Services Tasks için Kotlin Extensions
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.9.0")
 
     // ZXing - QR Code Generation
     implementation(libs.zxing.core)
