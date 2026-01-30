@@ -1,12 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Uygulamanın asıl teması (AppCompat olmalı) -->
     <style name="Theme.QRGuard" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <!-- Android 11 ve altı: splash sadece windowBackground ile -->
     <style name="Theme.QRGuard.Splash" parent="Theme.QRGuard">
-        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowBackground">@color/splash_bg</item>
     </style>
+
 </resources>
