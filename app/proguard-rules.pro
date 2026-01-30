@@ -5,7 +5,7 @@
 -dontwarn com.google.mlkit.**
 
 # Keep Room entities
--keep class com.example.qrguard.data.local.** { *; }
+-keep class com.yunusek.qrguard.data.local.** { *; }
 
 # Keep ZXing
 -keep class com.google.zxing.** { *; }
