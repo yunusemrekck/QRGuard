@@ -55,6 +55,13 @@ fun ScanScreen(
     val currentScan by viewModel.currentScan.collectAsState()
     val showImagePicker by viewModel.showImagePicker.collectAsState()
 
+    // ✅ Kamera iznini otomatik olarak iste
+    LaunchedEffect(Unit) {
+        if (!cameraPermissionState.status.isGranted) {
+            cameraPermissionState.launchPermissionRequest()
+        }
+    }
+
     // Image Picker Launcher
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
@@ -198,35 +205,25 @@ fun ScanScreen(
                 }
             }
 
-            cameraPermissionState.status.shouldShowRationale -> {
-                PermissionContent(
-                    title = stringResource(R.string.camera_permission_required),
-                    description = stringResource(R.string.camera_permission_rationale),
-                    buttonText = stringResource(R.string.grant_permission),
-                    onButtonClick = { cameraPermissionState.launchPermissionRequest() },
-                    onNavigateBack = onNavigateBack
-                )
-            }
-
             else -> {
-                val isPermanentlyDenied = !cameraPermissionState.status.shouldShowRationale &&
-                        !cameraPermissionState.status.isGranted
-
+                // ✅ İzin verilmemişse veya reddedilmişse - ayarlara yönlendir
                 PermissionContent(
                     title = stringResource(R.string.camera_permission_required),
                     description = stringResource(R.string.camera_permission_rationale),
-                    buttonText = if (isPermanentlyDenied)
+                    buttonText = if (cameraPermissionState.status.shouldShowRationale) {
+                        stringResource(R.string.grant_permission)
+                    } else {
                         stringResource(R.string.open_settings)
-                    else
-                        stringResource(R.string.grant_permission),
+                    },
                     onButtonClick = {
-                        if (isPermanentlyDenied) {
+                        if (cameraPermissionState.status.shouldShowRationale) {
+                            cameraPermissionState.launchPermissionRequest()
+                        } else {
+                            // Kalıcı olarak reddedilmişse ayarlara yönlendir
                             val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                                 data = Uri.fromParts("package", context.packageName, null)
                             }
                             context.startActivity(intent)
-                        } else {
-                            cameraPermissionState.launchPermissionRequest()
                         }
                     },
                     onNavigateBack = onNavigateBack
